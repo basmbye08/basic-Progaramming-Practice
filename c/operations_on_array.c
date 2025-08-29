@@ -66,7 +66,7 @@ printf("\n");
 
 int target = 3;
 int i = 0;
-while(i <= n && array[i] != target)
+while(i < n && array[i] != target)
 {
     i++;
 }
