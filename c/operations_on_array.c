@@ -62,7 +62,7 @@ for (int i = 0; i < n; i++ )
 printf("\n");
 
 
-// Seach if element 3 is present in the array
+// Seach if element 3 is present in the array using linear Search
 
 int target = 3;
 int i = 0;
