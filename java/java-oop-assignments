@@ -1,0 +1,57 @@
+package com.mycompany.javaassignments;
+
+class Rectangle{
+    int length;
+    int width;
+    public Rectangle(int length, int width){
+        this.length = length;
+        this.width = width;
+    }
+    int areaOfRectangle()
+    {
+        return length * width;
+    }
+
+}
+
+class City{
+    String cityName;
+    int cityPopulation;
+    
+    public City(String name, int population){
+        cityName = name;
+        cityPopulation = population;
+    } 
+    
+    public void display(){
+        System.out.println("City Name: " + cityName + " Population: " + cityPopulation);
+    }
+}
+
+
+
+
+public class JavaAssignments {
+
+    public static void main(String[] args) {
+        
+        Rectangle r1 = new Rectangle(8, 2);
+        System.out.println("Assinment 1 \n");
+        System.out.println("Area of the rectangle is: " + r1.areaOfRectangle());
+        
+        Rectangle r2 = new Rectangle(100, 50);
+         System.out.println("Area of the rectangle is: " + r2.areaOfRectangle() + "\n");
+         System.out.println("Assinment 2 \n");
+         
+         //creating an the two metro cities of our city class
+         City city1 = new City("Mumbai", 300000);
+         City city2 = new City("Delhi", 500000);
+         
+         city1.display();
+         city2.display();
+         
+        
+    }
+}
+
+
