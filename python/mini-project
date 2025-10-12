@@ -1,0 +1,54 @@
+resturant_menu = {
+    'Plate of Domada' : 50,
+    'plate of Yassa' : 55,
+    'Bottle of Wonjo' : 20,
+    'Pizza' : 40,
+    'Burger' : 30,
+    'French fries' : 30,
+    'Bottle of Water' : 10
+     }
+customer_order = []
+def my_resturant():
+    while True:
+        user = int(input("What will you like to order: 1-Domada, 2-Yassa, 3-Wonjo, 4-Pizza, 5-Burger, 6-Fries, 7-Water, 8-Exit  "))
+        match user:
+            
+            case 1:
+                customer_order.append('Plate of Domada')
+            case 2:
+                customer_order.append('plate of Yassa')
+            case 3:
+                customer_order.append('Bottle of Wonjo')
+            case 4:
+                customer_order.append('Pizza')
+            case 5:
+                customer_order.append('Burger')
+            case 6:
+                customer_order.append('French fries')
+            case 7:
+                customer_order.append('Bottle of Water')
+            case 8:
+                 return customer_order
+    
+            case _:
+                 print('please enter a valid input')
+
+my_resturant()
+print("This is your order: ")
+for i in customer_order:
+    print(i)
+
+def calculating_bill(a, b):
+    bill = 0
+    for i in a:
+        bill = bill + b.get(i)
+    print(f'Your total bill is: GMD{bill}')
+
+calculating_bill(a = customer_order, b =  resturant_menu )   
+
+            
+            
+            
+    
+    
+
