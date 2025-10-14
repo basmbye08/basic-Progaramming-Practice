@@ -1,0 +1,50 @@
+package com.mycompany.javasessional;
+
+import java.util.Scanner;
+
+public class Javasessional {
+    public static void main(String[] args) {
+        
+        Scanner sc = new Scanner(System.in);
+        int choice;
+        int vipCount = 0;
+        int carCount = 0;
+        int totalToll = 0;
+        
+        do {
+            System.out.println("\n=== TOLL PARK MENU ===");
+            System.out.println("1. VIP Car (No Toll)");
+            System.out.println("2. Car (Toll = Rs.30)");
+            System.out.println("3. Exit and Show Summary");
+            System.out.print("Enter your choice: ");
+            
+            choice = sc.nextInt();
+            
+            switch(choice) {
+                case 1:
+                    vipCount++;
+                    System.out.println("VIP Car entered. No toll charged.");
+                    break;
+                case 2:
+                    carCount++;
+                    totalToll += 30;
+                    System.out.println("Car entered. Rs.30 toll collected.");
+                    break;
+                case 3:
+                    System.out.println("\n=== EXITING TOLL PARK ===");
+                    System.out.println("Total VIP Cars: " + vipCount);
+                    System.out.println("Total Regular Cars: " + carCount);
+                    System.out.println("Total Cars Parked: " + (vipCount + carCount));
+                    System.out.println("Total Toll Collected: Rs." + totalToll);
+                    System.out.println("Thank you for using Toll Park System!");
+                    break;
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+            }
+            
+        } while(choice != 3);
+        
+        sc.close();
+    }
+}
+
