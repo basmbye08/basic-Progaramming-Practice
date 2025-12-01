@@ -1,0 +1,129 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head=NULL;
+
+void insertAtEnd(int val) {
+    struct Node* newNode=(struct Node*)malloc(sizeof(struct Node));
+    newNode->data=val;
+    
+    if(head==NULL) {
+        head=newNode;
+        newNode->next=head;
+        return;
+    }
+    
+    struct Node* temp=head;
+    while(temp->next!=head)
+        temp=temp->next;
+    
+    temp->next=newNode;
+    newNode->next=head;
+}
+
+void insertAtBegin(int val) {
+    struct Node* newNode=(struct Node*)malloc(sizeof(struct Node));
+    newNode->data=val;
+    
+    if(head==NULL) {
+        head=newNode;
+        newNode->next=head;
+        return;
+    }
+    
+    struct Node* temp=head;
+    while(temp->next!=head)
+        temp=temp->next;
+    
+    newNode->next=head;
+    head=newNode;
+    temp->next=head;
+}
+
+void deleteAtEnd() {
+    if(head==NULL) {
+        printf("List empty\n");
+        return;
+    }
+    
+    if(head->next==head) {
+        free(head);
+        head=NULL;
+        return;
+    }
+    
+    struct Node* temp=head;
+    while(temp->next->next!=head)
+        temp=temp->next;
+    
+    free(temp->next);
+    temp->next=head;
+}
+
+void deleteAtBegin() {
+    if(head==NULL) {
+        printf("List empty\n");
+        return;
+    }
+    
+    if(head->next==head) {
+        free(head);
+        head=NULL;
+        return;
+    }
+    
+    struct Node* temp=head;
+    while(temp->next!=head)
+        temp=temp->next;
+    
+    struct Node* toDelete=head;
+    head=head->next;
+    temp->next=head;
+    free(toDelete);
+}
+
+void display() {
+    if(head==NULL) {
+        printf("List empty\n");
+        return;
+    }
+    
+    struct Node* temp=head;
+    do {
+        printf("%d -> ", temp->data);
+        temp=temp->next;
+    } while(temp!=head);
+    printf("(head)\n");
+}
+
+int main() {
+    int ch, val;
+    
+    while(1) {
+        printf("1.Insert at end 2.Insert at begin 3.Delete at end\n");
+        printf("4.Delete at begin 5.Display 6.Exit: ");
+        scanf("%d", &ch);
+        
+        if(ch==1) {
+            printf("Value: ");
+            scanf("%d", &val);
+            insertAtEnd(val);
+        }
+        else if(ch==2) {
+            printf("Value: ");
+            scanf("%d", &val);
+            insertAtBegin(val);
+        }
+        else if(ch==3) deleteAtEnd();
+        else if(ch==4) deleteAtBegin();
+        else if(ch==5) display();
+        else break;
+    }
+    
+    return 0;
+}
