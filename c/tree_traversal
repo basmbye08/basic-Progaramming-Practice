@@ -44,4 +44,16 @@ int main() {
     root->left->right=createNode(5);
     
     printf("Preorder traversal: ");
-    preorder
+    preorder(root);
+    printf("\n");
+    
+    printf("Inorder traversal: ");
+    inorder(root);
+    printf("\n");
+    
+    printf("Postorder traversal: ");
+    postorder(root);
+    printf("\n");
+    
+    return 0;
+}
