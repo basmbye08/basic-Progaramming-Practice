@@ -1,0 +1,162 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* head=NULL;
+
+void insertAtEnd(int val) {
+    struct Node* newNode=(struct Node*)malloc(sizeof(struct Node));
+    newNode->data=val;
+    newNode->next=NULL;
+    
+    if(head==NULL) {
+        head=newNode;
+        return;
+    }
+    
+    struct Node* temp=head;
+    while(temp->next!=NULL)
+        temp=temp->next;
+    temp->next=newNode;
+}
+
+void insertAtBegin(int val) {
+    struct Node* newNode=(struct Node*)malloc(sizeof(struct Node));
+    newNode->data=val;
+    newNode->next=head;
+    head=newNode;
+}
+
+void insertAtPosition(int pos, int val) {
+    if(pos==1) {
+        insertAtBegin(val);
+        return;
+    }
+    
+    struct Node* newNode=(struct Node*)malloc(sizeof(struct Node));
+    newNode->data=val;
+    
+    struct Node* temp=head;
+    for(int i=1; i<pos-1 && temp!=NULL; i++)
+        temp=temp->next;
+    
+    if(temp==NULL) {
+        printf("Invalid position\n");
+        free(newNode);
+        return;
+    }
+    
+    newNode->next=temp->next;
+    temp->next=newNode;
+}
+
+void deleteAtBegin() {
+    if(head==NULL) {
+        printf("List empty\n");
+        return;
+    }
+    struct Node* temp=head;
+    head=head->next;
+    free(temp);
+}
+
+void deleteAtEnd() {
+    if(head==NULL) {
+        printf("List empty\n");
+        return;
+    }
+    
+    if(head->next==NULL) {
+        free(head);
+        head=NULL;
+        return;
+    }
+    
+    struct Node* temp=head;
+    while(temp->next->next!=NULL)
+        temp=temp->next;
+    
+    free(temp->next);
+    temp->next=NULL;
+}
+
+void deleteAtPosition(int pos) {
+    if(head==NULL) {
+        printf("List empty\n");
+        return;
+    }
+    
+    if(pos==1) {
+        deleteAtBegin();
+        return;
+    }
+    
+    struct Node* temp=head;
+    for(int i=1; i<pos-1 && temp!=NULL; i++)
+        temp=temp->next;
+    
+    if(temp==NULL || temp->next==NULL) {
+        printf("Invalid position\n");
+        return;
+    }
+    
+    struct Node* toDelete=temp->next;
+    temp->next=temp->next->next;
+    free(toDelete);
+}
+
+void display() {
+    if(head==NULL) {
+        printf("List empty\n");
+        return;
+    }
+    
+    struct Node* temp=head;
+    while(temp!=NULL) {
+        printf("%d -> ", temp->data);
+        temp=temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    int ch, val, pos;
+    
+    while(1) {
+        printf("1.Insert at end 2.Insert at begin 3.Insert at position\n");
+        printf("4.Delete at begin 5.Delete at end 6.Delete at position\n");
+        printf("7.Display 8.Exit: ");
+        scanf("%d", &ch);
+        
+        if(ch==1) {
+            printf("Value: ");
+            scanf("%d", &val);
+            insertAtEnd(val);
+        }
+        else if(ch==2) {
+            printf("Value: ");
+            scanf("%d", &val);
+            insertAtBegin(val);
+        }
+        else if(ch==3) {
+            printf("Position and value: ");
+            scanf("%d%d", &pos, &val);
+            insertAtPosition(pos, val);
+        }
+        else if(ch==4) deleteAtBegin();
+        else if(ch==5) deleteAtEnd();
+        else if(ch==6) {
+            printf("Position: ");
+            scanf("%d", &pos);
+            deleteAtPosition(pos);
+        }
+        else if(ch==7) display();
+        else break;
+    }
+    
+    return 0;
+}
