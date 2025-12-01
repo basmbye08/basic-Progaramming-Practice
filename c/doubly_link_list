@@ -1,0 +1,135 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* prev;
+    struct Node* next;
+};
+
+struct Node* head=NULL;
+
+void insertAtEnd(int val) {
+    struct Node* newNode=(struct Node*)malloc(sizeof(struct Node));
+    newNode->data=val;
+    newNode->next=NULL;
+    
+    if(head==NULL) {
+        newNode->prev=NULL;
+        head=newNode;
+        return;
+    }
+    
+    struct Node* temp=head;
+    while(temp->next!=NULL)
+        temp=temp->next;
+    
+    temp->next=newNode;
+    newNode->prev=temp;
+}
+
+void insertAtBegin(int val) {
+    struct Node* newNode=(struct Node*)malloc(sizeof(struct Node));
+    newNode->data=val;
+    newNode->prev=NULL;
+    newNode->next=head;
+    
+    if(head!=NULL)
+        head->prev=newNode;
+    
+    head=newNode;
+}
+
+void deleteAtEnd() {
+    if(head==NULL) {
+        printf("List empty\n");
+        return;
+    }
+    
+    if(head->next==NULL) {
+        free(head);
+        head=NULL;
+        return;
+    }
+    
+    struct Node* temp=head;
+    while(temp->next!=NULL)
+        temp=temp->next;
+    
+    temp->prev->next=NULL;
+    free(temp);
+}
+
+void deleteAtBegin() {
+    if(head==NULL) {
+        printf("List empty\n");
+        return;
+    }
+    
+    struct Node* temp=head;
+    head=head->next;
+    
+    if(head!=NULL)
+        head->prev=NULL;
+    
+    free(temp);
+}
+
+void displayForward() {
+    if(head==NULL) {
+        printf("List empty\n");
+        return;
+    }
+    
+    struct Node* temp=head;
+    while(temp!=NULL) {
+        printf("%d <-> ", temp->data);
+        temp=temp->next;
+    }
+    printf("NULL\n");
+}
+
+void displayBackward() {
+    if(head==NULL) {
+        printf("List empty\n");
+        return;
+    }
+    
+    struct Node* temp=head;
+    while(temp->next!=NULL)
+        temp=temp->next;
+    
+    while(temp!=NULL) {
+        printf("%d <-> ", temp->data);
+        temp=temp->prev;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    int ch, val;
+    
+    while(1) {
+        printf("1.Insert at end 2.Insert at begin 3.Delete at end\n");
+        printf("4.Delete at begin 5.Display forward 6.Display backward 7.Exit: ");
+        scanf("%d", &ch);
+        
+        if(ch==1) {
+            printf("Value: ");
+            scanf("%d", &val);
+            insertAtEnd(val);
+        }
+        else if(ch==2) {
+            printf("Value: ");
+            scanf("%d", &val);
+            insertAtBegin(val);
+        }
+        else if(ch==3) deleteAtEnd();
+        else if(ch==4) deleteAtBegin();
+        else if(ch==5) displayForward();
+        else if(ch==6) displayBackward();
+        else break;
+    }
+    
+    return 0;
+}
