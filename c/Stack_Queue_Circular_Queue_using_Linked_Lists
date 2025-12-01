@@ -1,0 +1,190 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* stackTop=NULL;
+struct Node* queueFront=NULL;
+struct Node* queueRear=NULL;
+struct Node* cqueueFront=NULL;
+struct Node* cqueueRear=NULL;
+
+void push(int val) {
+    struct Node* newNode=(struct Node*)malloc(sizeof(struct Node));
+    newNode->data=val;
+    newNode->next=stackTop;
+    stackTop=newNode;
+}
+
+int pop() {
+    if(stackTop==NULL) {
+        printf("Stack Underflow\n");
+        return -1;
+    }
+    struct Node* temp=stackTop;
+    int val=temp->data;
+    stackTop=stackTop->next;
+    free(temp);
+    return val;
+}
+
+void displayStack() {
+    if(stackTop==NULL) {
+        printf("Stack empty\n");
+        return;
+    }
+    struct Node* temp=stackTop;
+    while(temp!=NULL) {
+        printf("%d\n", temp->data);
+        temp=temp->next;
+    }
+}
+
+void enqueue(int val) {
+    struct Node* newNode=(struct Node*)malloc(sizeof(struct Node));
+    newNode->data=val;
+    newNode->next=NULL;
+    
+    if(queueRear==NULL) {
+        queueFront=queueRear=newNode;
+        return;
+    }
+    
+    queueRear->next=newNode;
+    queueRear=newNode;
+}
+
+int dequeue() {
+    if(queueFront==NULL) {
+        printf("Queue Underflow\n");
+        return -1;
+    }
+    struct Node* temp=queueFront;
+    int val=temp->data;
+    queueFront=queueFront->next;
+    
+    if(queueFront==NULL)
+        queueRear=NULL;
+    
+    free(temp);
+    return val;
+}
+
+void displayQueue() {
+    if(queueFront==NULL) {
+        printf("Queue empty\n");
+        return;
+    }
+    struct Node* temp=queueFront;
+    while(temp!=NULL) {
+        printf("%d ", temp->data);
+        temp=temp->next;
+    }
+    printf("\n");
+}
+
+void cenqueue(int val) {
+    struct Node* newNode=(struct Node*)malloc(sizeof(struct Node));
+    newNode->data=val;
+    
+    if(cqueueRear==NULL) {
+        cqueueFront=cqueueRear=newNode;
+        newNode->next=cqueueFront;
+        return;
+    }
+    
+    newNode->next=cqueueFront;
+    cqueueRear->next=newNode;
+    cqueueRear=newNode;
+}
+
+int cdequeue() {
+    if(cqueueFront==NULL) {
+        printf("Circular Queue Underflow\n");
+        return -1;
+    }
+    
+    int val;
+    if(cqueueFront==cqueueRear) {
+        val=cqueueFront->data;
+        free(cqueueFront);
+        cqueueFront=cqueueRear=NULL;
+    }
+    else {
+        struct Node* temp=cqueueFront;
+        val=temp->data;
+        cqueueFront=cqueueFront->next;
+        cqueueRear->next=cqueueFront;
+        free(temp);
+    }
+    return val;
+}
+
+void displayCQueue() {
+    if(cqueueFront==NULL) {
+        printf("Circular Queue empty\n");
+        return;
+    }
+    
+    struct Node* temp=cqueueFront;
+    do {
+        printf("%d ", temp->data);
+        temp=temp->next;
+    } while(temp!=cqueueFront);
+    printf("\n");
+}
+
+int main() {
+    int ch, val, ds;
+    while(1) {
+        printf("1.Stack 2.Queue 3.Circular Queue 4.Exit: ");
+        scanf("%d", &ds);
+        if(ds==1) {
+            while(1) {
+                printf("1.Push 2.Pop 3.Display 4.Back: ");
+                scanf("%d", &ch);
+                if(ch==1) {
+                    printf("Value: ");
+                    scanf("%d", &val);
+                    push(val);
+                }
+                else if(ch==2) printf("Popped: %d\n", pop());
+                else if(ch==3) displayStack();
+                else break;
+            }
+        }
+        else if(ds==2) {
+            while(1) {
+                printf("1.Enqueue 2.Dequeue 3.Display 4.Back: ");
+                scanf("%d", &ch);
+                if(ch==1) {
+                    printf("Value: ");
+                    scanf("%d", &val);
+                    enqueue(val);
+                }
+                else if(ch==2) printf("Dequeued: %d\n", dequeue());
+                else if(ch==3) displayQueue();
+                else break;
+            }
+        }
+        else if(ds==3) {
+            while(1) {
+                printf("1.Enqueue 2.Dequeue 3.Display 4.Back: ");
+                scanf("%d", &ch);
+                if(ch==1) {
+                    printf("Value: ");
+                    scanf("%d", &val);
+                    cenqueue(val);
+                }
+                else if(ch==2) printf("Dequeued: %d\n", cdequeue());
+                else if(ch==3) displayCQueue();
+                else break;
+            }
+        }
+        else break;
+    }
+    return 0;
+}
