@@ -1,0 +1,56 @@
+#include<stdio.h>
+int list[100], n=0;
+
+void insert(int pos, int val) {
+    if(pos<0 || pos>n) {
+        printf("Invalid position\n");
+        return;
+    }
+    for(int i=n; i>pos; i--)
+        list[i]=list[i-1];
+    list[pos]=val;
+    n++;
+    printf("Inserted\n");
+}
+
+void delete(int pos) {
+    if(pos<0 || pos>=n) {
+        printf("Invalid position\n");
+        return;
+    }
+    for(int i=pos; i<n-1; i++)
+        list[i]=list[i+1];
+    n--;
+    printf("Deleted\n");
+}
+
+void display() {
+    if(n==0) {
+        printf("List empty\n");
+        return;
+    }
+    for(int i=0; i<n; i++)
+        printf("%d ", list[i]);
+    printf("\n");
+}
+
+int main() {
+    int ch, pos, val;
+    while(1) {
+        printf("1.Insert 2.Delete 3.Display 4.Exit: ");
+        scanf("%d", &ch);
+        if(ch==1) {
+            printf("Position and value: ");
+            scanf("%d%d", &pos, &val);
+            insert(pos, val);
+        }
+        else if(ch==2) {
+            printf("Position: ");
+            scanf("%d", &pos);
+            delete(pos);
+        }
+        else if(ch==3) display();
+        else break;
+    }
+    return 0;
+}
